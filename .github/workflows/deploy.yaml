@@ -1,0 +1,42 @@
+name: Deploy Hugo Site to Github Pages on Master Branch
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    
+
+
+    steps:
+      - uses: actions/checkout@v1  # v2 does not have submodules option now
+       # with:
+       #   submodules: true
+
+      - name: Hugo setup
+        uses: peaceiris/actions-hugo@v3.0.0
+        with:
+          hugo-version: 'latest'
+          extended: true
+
+
+      - name: Build
+        run: hugo 
+
+      - name: Deploy to Github Pages
+        env:
+          GIT_NAME: DreamWalkerYYS
+          GIT_EMAIL: ${{ secrets.GIT_EMAIL }}
+          REPO: github.com/DreamWalkerYYS/DreamWalkerYYS.github.io
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: |
+          cd ./public && git init && git add .
+          git config --global user.name $GIT_NAME
+          git config --global user.email $GIT_EMAIL
+          git commit -m "Site deployed by GitHub Actions"
+          git push --force --quiet "https://$GH_TOKEN@$REPO" master:master
+
+      
