@@ -27,7 +27,7 @@ params:
         - post
     featuredImageField: image
     rssFullContent: true
-    favicon:
+    favicon: \favicon.ico
 
     footer:
         since: 2020
@@ -38,8 +38,8 @@ params:
         lastUpdated: Jan 02, 2006 15:04 MST
 
     sidebar:
-        emoji: 🍥
-        subtitle: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        emoji: ♾️
+        subtitle: stay hungry，stay foolish ---Steve Jobs
         avatar:
             enabled: true
             local: true
@@ -221,10 +221,4 @@ markup:
         ordered: true
         startLevel: 2
     highlight: 
-        noClasses: false
-        codeFences: false
-        guessSyntax: true
-        lineNoStart: 1
-        lineNos: true
-        lineNumbersInTable: true
-        tabWidth: 4
+        style: onedark
