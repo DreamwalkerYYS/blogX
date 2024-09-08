@@ -55,7 +55,7 @@ params:
 
     comments:
         enabled: true
-        provider: utterances
+        provider: waline
 
         disqusjs:
             shortname:
@@ -65,7 +65,7 @@ params:
             adminLabel:
 
         utterances:
-            repo: dreamwalkeryys/comments
+            repo: 
             issueTerm: pathname
             label: blog
 
@@ -82,21 +82,26 @@ params:
             clientSecret:
             autoCreateIssue: false
 
-        # Waline client configuration see: https://waline.js.org/en/reference/client.html
+        # Waline client configuration see: 
         waline:
-            serverURL:
-            lang:
-            visitor:
+            serverURL: https://waline-1-w8650080.deta.app
+            lang: zh-CN
+            visitor: false
             avatar:
             emoji:
                 - https://cdn.jsdelivr.net/gh/walinejs/emojis/weibo
+                - https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/qq
+                - https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/bilibili
+                - https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/alus
+                - https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/tieba
+                - https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/tw-emoji
             requiredMeta:
                 - name
                 - email
                 - url
             placeholder:
             locale:
-                admin: Admin
+                admin: Dreamwalker
 
         twikoo:
             envId:
@@ -190,7 +195,7 @@ menu:
     social:
         - identifier: github
           name: GitHub
-          url: https://github.com/CaiJimmy/hugo-theme-stack
+          url: https://github.com/Dreamwalkeryys
           params:
               icon: brand-github
 
