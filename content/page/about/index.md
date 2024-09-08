@@ -1,10 +1,9 @@
 ---
-title: About
-description: Hugo, the world's fastest framework for building websites
-date: '2019-02-28'
+title: 关于我
+description: Dreamwalker,一个啥也不会的高中牲
+date: '2024-08-28'
 aliases:
-  - about-us
-  - about-hugo
+  - 关于我
   - contact
 license: CC BY-NC-ND
 lastmod: '2024-07-09'
@@ -15,20 +14,7 @@ menu:
             icon: user
 ---
 
-Written in Go, Hugo is an open source static site generator available under the [Apache Licence 2.0.](https://github.com/gohugoio/hugo/blob/master/LICENSE) Hugo supports TOML, YAML and JSON data file types, Markdown and HTML content files and uses shortcodes to add rich content. Other notable features are taxonomies, multilingual mode, image processing, custom output formats, HTML/CSS/JS minification and support for Sass SCSS workflows.
-
-Hugo makes use of a variety of open source projects including:
-
-* https://github.com/yuin/goldmark
-* https://github.com/alecthomas/chroma
-* https://github.com/muesli/smartcrop
-* https://github.com/spf13/cobra
-* https://github.com/spf13/viper
-
-Hugo is ideal for blogs, corporate websites, creative portfolios, online magazines, single page applications or even a website with thousands of pages.
-
-Hugo is for people who want to hand code their own website without worrying about setting up complicated runtimes, dependencies and databases.
-
-Websites built with Hugo are extremelly fast, secure and can be deployed anywhere including, AWS, GitHub Pages, Heroku, Netlify and any other hosting provider.
-
-Learn more and contribute on [GitHub](https://github.co
+其实，也没什么好说的，我就是一个只会前端的高中生，这个站点算是我对我所学的东西进行复习与应用。
+由于本人能力有限，文章中难免会存在一些谬误，如果各位大佬发现了，麻烦大家指正。
+关于我为什么叫Dreamwalker emmm我就这么解释吧：由于某些原因，我希望我现在活在我的梦中，我希望我现在在梦游而非处于清醒的状态。至于是什么原因大家就不要刨根问底了🙃。
+就说这么多了，打字好烦啊😨

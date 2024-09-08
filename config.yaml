@@ -30,7 +30,7 @@ params:
     favicon: \favicon.ico
 
     footer:
-        since: 2020
+        since: 2024
         customText:
 
     dateFormat:
@@ -84,7 +84,7 @@ params:
 
         # Waline client configuration see: 
         waline:
-            serverURL: https://waline-1-w8650080.deta.app
+            serverURL: https://waline-1-w8650080.deta.app/
             lang: zh-CN
             visitor: false
             avatar:
