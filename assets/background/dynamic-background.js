@@ -1,88 +1,63 @@
- // dynamic-background.js
-
-// 获取日出日落时间
-function getSunriseSunset(lat, lon) {
-  return fetch(`https://api.sunrise-sunset.org/json?lat=${lat}&lng=${lon}`)
-    .then(response => response.json())
-    .then(data => {
-      const sunrise = new Date(data.results.sunrise);
-      const sunset = new Date(data.results.sunset);
-      return { sunrise, sunset };
-    });
+// 使用ipapi获取地理位置信息
+function getGeoInfoByIP() {
+    fetch('http://ip-api.com/json/')
+        .then(response => response.json())
+        .then(data => {
+            const lat = data.latitude;
+            const lng = data.longitude;
+            // 使用经纬度更新背景图片
+            updateBackgroundImage(lat, lng);
+        })
+        .catch(error => console.error('Error fetching IP info:', error));
 }
 
-// 更换背景图片
-function updateBackgroundImage(sunrise, sunset) {
-  const now = new Date();
-  const hours = now.getHours();
-  const minutes = now.getMinutes();
-  const seconds = now.getSeconds();
-  const nowTime = hours * 3600 + minutes * 60 + seconds;
-  const sunriseTime = sunrise.getHours() * 3600 + sunrise.getMinutes() * 60 + sunrise.getSeconds();
-  const sunsetTime = sunset.getHours() * 3600 + sunset.getMinutes() * 60 + sunset.getSeconds();
+// 根据经纬度和当前时间更换背景图片
+function updateBackgroundImage(lat, lng) {
+    const now = new Date();
+    const times = SunCalc.getTimes(now, lat, lng);
+    const sunPos = SunCalc.getPosition(now, lat, lng);
+    const altitude = sunPos.altitude; // 太阳高度角
 
-  let backgroundImage = '';
-  let backgroundSize = '';
-  let backgroundPosition = '';
+    let backgroundImage = '';
 
-  // 根据当前时间选择背景图片
-  if (nowTime < sunriseTime) {
-    backgroundImage = 'sunrise-before.jpg';
-  } else if (nowTime < sunriseTime + 3600) {
-    backgroundImage = 'sunrise.jpg';
-  } else if (nowTime < sunriseTime + 3600 * 2) {
-    backgroundImage = 'after-sunrise.jpg';
-  } else if (nowTime < sunriseTime + 3600 * 6) {
-    backgroundImage = 'morning.jpg';
-  } else if (nowTime < sunriseTime + 3600 * 8) {
-    backgroundImage = 'noon.jpg';
-  } else if (nowTime < sunriseTime + 3600 * 13) {
-    backgroundImage = 'afternoon.jpg';
-  } else if (nowTime < sunsetTime - 3600 * 2) {
-    backgroundImage = 'before-sunset.jpg';
-  } else if (nowTime < sunsetTime) {
-    backgroundImage = 'sunset.jpg';
-  } else {
-    backgroundImage = 'night.jpg';
-  }
+    if (now >= times.sunrise && now < times.sunriseEnd) {
+        // 日出时
+        backgroundImage = 'https://img.picgo.net/2024/12/01/sunrisefbdd02496de6fa9a.jpg';
+    } else if (now >= times.sunriseEnd && now < times.goldenHourEnd) {
+        // 日出后
+        backgroundImage = 'https://img.picgo.net/2024/12/01/after-sunrise0fb492a6a59d7ea8.jpg';
+    } else if (now >= times.goldenHourEnd && now < times.solarNoon) {
+        // 上午
+        backgroundImage = 'https://img.picgo.net/2024/12/01/morning71674465f59c76f6.jpg';
+    } else if (now >= times.solarNoon && now < times.goldenHour) {
+        // 中午
+        backgroundImage = 'https://img.picgo.net/2024/12/01/noon880c74aa051d9e47.jpg';
+    } else if (now >= times.goldenHour && now < times.sunsetStart) {
+        // 下午
+        backgroundImage = 'https://img.picgo.net/2024/12/01/afternoon1d1f7cff61d492d1.jpg';
+    } else if (now >= times.sunsetStart && now < times.sunset) {
+        // 日落前
+        backgroundImage = 'https://img.picgo.net/2024/12/01/before-sunsete9cc02e165511cf7.jpg';
+    } else if (now >= times.sunset && now < times.dusk) {
+        // 日落时
+        backgroundImage = 'https://img.picgo.net/2024/12/01/sunsetd2b9acbb51df672a.jpg';
+    } else {
+        // 夜晚
+        backgroundImage = 'https://img.picgo.net/2024/12/01/nightc09ff382af818c7a.jpg';
+    }
 
-  // 检测媒体查询条件
-  const isSmallScreen = window.matchMedia('(max-width: 768px)').matches;
-  const isLandscape = window.matchMedia('(orientation: landscape)').matches;
-
-  // 根据媒体查询条件设置背景图片样式
-  if (isSmallScreen) {
-    backgroundSize = 'contain';
-  } else if (isLandscape) {
-    backgroundSize = 'auto 100%';
-  } else {
-    backgroundSize = 'cover';
-  }
-
-  // 更换背景图片并设置样式
-  document.body.style.backgroundImage = `url(${backgroundImage})`;
-  document.body.style.backgroundSize = backgroundSize;
-  document.body.style.backgroundPosition = backgroundPosition;
+    // 更换背景图片
+    document.body.style.backgroundImage = `url(${backgroundImage})`;
 }
 
-// 获取用户位置信息并更新背景图片
-function initDynamicBackground() {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(position => {
-      const lat = position.coords.latitude;
-      const lon = position.coords.longitude;
-      getSunriseSunset(lat, lon).then(({ sunrise, sunset }) => {
-        updateBackgroundImage(sunrise, sunset);
-      });
-    });
-  } else {
-    console.error('Geolocation is not supported by this browser.');
-  }
-}
+// 初始化背景图片
+getGeoInfoByIP();
 
-// 监听窗口尺寸变化，更新背景图片
-window.addEventListener('resize', initDynamicBackground);
+// 可以设置定时器，定时更新背景图片
+setInterval(() => {
+    getGeoInfoByIP(); // 重新获取地理位置信息，并更新背景图片
+}, 1000 * 60 * 5); // 每5分钟更新一次
 
-// 初始化动态背景
-initDynamicBackground();
+
+
 
